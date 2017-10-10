@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .docker/php-fpm
+      args:
+        XDEBUG_REMOTE_HOST: "${XDEBUG_REMOTE_HOST}"
+    volumes:
+      - .:/var/www/dash
+    ports:
+      - "${PORT_FPM}:9000"
+  nginx:
+    build: ./.docker/nginx
+    ports:
+      - "${PORT_HTTP}:80"
+      - "${PORT_HTTPS}:443"
+    links:
+      - php
+    volumes:
+      - ./var/logs/nginx/:/var/log/nginx
+      - .:/var/www/dash

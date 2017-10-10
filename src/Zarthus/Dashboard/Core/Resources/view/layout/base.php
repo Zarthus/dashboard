@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <title><?= $this->e($title) ?></title>
+
+        <link rel="stylesheet" href="/assets/css/bulma-slate.css" />
+    </head>
+    <body>
+        <?php if ($layout['has-hero']) { ?>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">
+                        <?= $this->e($layout['title']) ?>
+                    </h1>
+                    <h2 class="subtitle">
+                        <?= $this->e($layout['subtitle']) ?>
+                    </h2>
+                </div>
+            </div>
+        </section>
+        <?php } ?>
+
+        {{ contents }}
+    </body>
+</html>

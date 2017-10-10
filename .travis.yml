@@ -1,0 +1,18 @@
+language: php
+
+sudo: false
+
+php:
+  - '7.1'
+  - nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+install:
+  - composer install
+
+script:
+  - vendor/bin/phpunit --configuration=var/phpunit.xml --coverage-text
+  - vendor/bin/phpcs --standard=var/phpcs.ruleset.xml

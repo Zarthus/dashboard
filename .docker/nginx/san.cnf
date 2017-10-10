@@ -1,0 +1,17 @@
+[req]
+default_bits = 2048
+distinguished_name = dn
+req_extensions = san
+
+[dn]
+countryName = DE
+stateOrProvinceName = Unknown
+localityName = Unknown
+organisationName = Dash
+commonName = dash.dev
+
+[san]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = dash.dev

@@ -1,0 +1,22 @@
+<?php
+
+return [
+    'layout:index' => [
+        'base' => 'base',
+        'title' => 'Simple Dashboard',
+
+        'variables' => [
+            'has-hero' => true,
+            'title' => 'Simple Dashboard',
+            'subtitle' => 'Hello, World!',
+        ],
+
+        'containers' => [
+            [
+                'is-half' => [
+                    'ModuleOne'
+                ],
+            ],
+        ],
+    ],
+];
