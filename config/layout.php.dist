@@ -9,12 +9,30 @@ return [
             'has-hero' => true,
             'title' => 'Simple Dashboard',
             'subtitle' => 'Hello, World!',
+            'theme' => 'bulma-slate',
         ],
 
         'containers' => [
             [
-                'is-half' => [
-                    'ModuleOne'
+                'template' => 'horizontal_two_columns',
+                'cache_ttl' => 3600,
+
+                'render' => [
+                    'sectionLeft' => [
+                        'module' => 'Constant.StaticHtml',
+
+                        'config' => [
+                            'text' => 'Lorem ipsum',
+                        ],
+                    ],
+
+                    'sectionRight' => [
+                        'module' => 'Constant.StaticHtml',
+
+                        'config' => [
+                            'text' => 'dolor sit amet',
+                        ],
+                    ],
                 ],
             ],
         ],

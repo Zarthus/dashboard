@@ -10,12 +10,13 @@ declare(strict_types=1);
 
 namespace Zarthus\Dashboard\Core\Impl;
 
-use Symfony\Component\HttpFoundation\Response;
-use Zarthus\Dashboard\Core\Module\ColumnCollection;
-
 interface Container
 {
-    public function getColumns(): ColumnCollection;
+    public function setRenderConfig(array $config);
 
-    public function render(): Response;
+    public function render(): string;
+
+    public function getCacheTtl(): int;
+
+    public function hashCode(): string;
 }

@@ -1,9 +1,6 @@
 <?php
 
 return [
+    // Debug mode: Show Exception traces back to the user.
     'debug' => false,
-
-    'modules' => [
-
-    ],
 ];

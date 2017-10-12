@@ -5,10 +5,10 @@
 
         <title><?= $this->e($title) ?></title>
 
-        <link rel="stylesheet" href="/assets/css/bulma-slate.css" />
+        <link rel="stylesheet" href="/assets/css/<?= $layout['theme'] ?? 'bulma-slate' ?>.css" />
     </head>
     <body>
-        <?php if ($layout['has-hero']) { ?>
+        <?php if (isset($layout['has-hero']) && $layout['has-hero']) { ?>
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
@@ -23,6 +23,6 @@
         </section>
         <?php } ?>
 
-        {{ contents }}
+        <?= $contents ?>
     </body>
 </html>

@@ -10,20 +10,18 @@ declare(strict_types=1);
 
 namespace Zarthus\Dashboard\Core\Html;
 
-use League\Plates\Engine as TemplateEngine;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Zarthus\Dashboard\Core\Builder\ModuleBuilder;
+use Zarthus\Dashboard\Core\Builder\ContainerBuilder;
 use Zarthus\Dashboard\Core\Config;
-use Zarthus\Dashboard\Core\Directory;
-use Zarthus\Dashboard\Core\Ds\Collection;
 use Zarthus\Dashboard\Core\Exception\Fatal\InvalidConfigurationException;
+use Zarthus\Dashboard\Core\Feature\RendersTemplates;
 use Zarthus\Dashboard\Core\Kernel;
-use Zarthus\Dashboard\Core\Module\ColumnCollection;
-use Zarthus\Dashboard\Core\Module\ContainerCollection;
 
 class Layout
 {
+    use RendersTemplates;
+
     /**
      * @var Config
      */
@@ -49,7 +47,7 @@ class Layout
         $this->layoutName = strtolower($layoutName);
         $this->config = new Config('layout');
 
-        if (!$this->config->hasKey('layout:' . $this->layoutName)) {
+        if (!$this->config->exists('layout:' . $this->layoutName)) {
             throw new InvalidConfigurationException(sprintf(
                 'Layout %s does not exist in config:layout',
                 $this->layoutName
@@ -62,19 +60,42 @@ class Layout
 
     public function render(): Response
     {
-        $templates = new TemplateEngine(Directory::VIEWS);
-        $html = $templates->render('layout/base', [
-            'title' => $this->getLayoutConfig()['title'],
+        $containers = ContainerBuilder::fromConfig($this->kernel, $this->getLayoutConfig()['containers'])
+            ->getCollection();
+
+        $html = $this->renderTemplate('layout/base', [
+            'title' => $this->getLayoutConfig()['title'] ?? 'Unknown Dashboard',
             'layout' => $this->getLayoutConfig()['variables'],
+            'contents' => $this->renderContainers($containers)
         ]);
 
-        // TODO
-        $html = str_replace('{{ contents }}', '{{ contents }}', $html);
-
         return new Response($html);
-//        $this->buildModules(
-//            new ModuleCollection($this->getConfig()->get('modules'))
-//        );
+    }
+
+    protected function renderContainers(ContainerCollection $collection): string
+    {
+        $output = '';
+
+        $cachePool = $this->kernel->getCache()->getPool();
+
+        /**
+         * @var $container Container
+         */
+        foreach ($collection as $container) {
+            $hashCode = $container->hashCode();
+
+            if ($cachePool->has($hashCode)) {
+                $output .= $cachePool->get($hashCode);
+            } else {
+                $render = $container->render();
+
+                $output .= $render . PHP_EOL;
+
+                $cachePool->set($hashCode, $render, $container->getCacheTtl());
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -104,15 +125,5 @@ class Layout
     public function getRequest(): Request
     {
         return $this->request;
-    }
-
-    private function buildModules(Collection $modules): ContainerCollection
-    {
-
-    }
-
-    private function buildModule(ModuleBuilder $builder): ColumnCollection
-    {
-
     }
 }

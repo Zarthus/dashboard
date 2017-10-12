@@ -31,7 +31,8 @@ final class Router
         return $this->loadLayout($request, 'index')->render();
     }
 
-    private function loadLayout(Request $request, string $name): Layout {
+    private function loadLayout(Request $request, string $name): Layout
+    {
         return new Layout($this->kernel, $request, $name);
     }
 }

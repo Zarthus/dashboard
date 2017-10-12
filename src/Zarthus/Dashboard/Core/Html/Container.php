@@ -10,24 +10,113 @@ declare(strict_types=1);
 
 namespace Zarthus\Dashboard\Core\Html;
 
-use Symfony\Component\HttpFoundation\Response;
+use Zarthus\Dashboard\Core\Directory;
+use Zarthus\Dashboard\Core\Exception\Fatal\FileNotFoundException;
+use Zarthus\Dashboard\Core\Exception\Fatal\InvalidConfigurationException;
+use Zarthus\Dashboard\Core\Feature\KernelAware;
+use Zarthus\Dashboard\Core\Feature\RendersTemplates;
 use Zarthus\Dashboard\Core\Impl\Container as ContainerImpl;
-use Zarthus\Dashboard\Core\Module\ColumnCollection;
 
 class Container implements ContainerImpl
 {
-    public function __construct()
-    {
+    use RendersTemplates;
+    use KernelAware;
 
+    /**
+     * @var string
+     */
+    public $templateName;
+
+    /**
+     * @var array
+     */
+    public $render;
+
+    public function __construct(string $templateName)
+    {
+        $this->setTemplateName($templateName);
     }
 
-    public function getColumns(): ColumnCollection
+    public function render(): string
     {
-        // TODO: Implement getColumns() method.
+        $output = [];
+
+        foreach ($this->render as $sectionKey => $config) {
+            $section = Section::fromConfig($this->kernel, $sectionKey, $config);
+
+            $output[$sectionKey] = $section->getModule()->runExecute();
+        }
+
+        return $this->renderTemplate(
+            'templates/' . $this->templateName,
+            $output
+        );
     }
 
-    public function render(): Response
+    /**
+     * @return array
+     */
+    public function getRender(): array
     {
-        // TODO: Implement render() method.
+        return $this->render;
+    }
+
+    /**
+     * @param array $render
+     *
+     * @return self
+     */
+    public function setRenderConfig(array $render): Container
+    {
+        $this->render = $render;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplateName(): string
+    {
+        return $this->templateName;
+    }
+
+    /**
+     * @param string $templateName
+     *
+     * @return Container
+     *
+     * @throws FileNotFoundException
+     * @throws InvalidConfigurationException
+     */
+    protected function setTemplateName(string $templateName): Container
+    {
+        if (strpos($templateName, '.') !== false) {
+            throw new InvalidConfigurationException(sprintf(
+                'Illegal template name \'%s\' : Cannot have dots in file name.',
+                $templateName
+            ));
+        }
+
+        if (!file_exists(Directory::join(Directory::TEMPLATES, $templateName . '.php'))) {
+            throw new FileNotFoundException(sprintf(
+                'Template %s not found in %s.',
+                $templateName,
+                Directory::TEMPLATES
+            ));
+        }
+        $this->templateName = $templateName;
+
+        return $this;
+    }
+
+    public function getCacheTtl(): int
+    {
+        return $this->render['cache_ttl'] ?? 300;
+    }
+
+    public function hashCode(): string
+    {
+        return hash('sha256', serialize($this->render));
     }
 }

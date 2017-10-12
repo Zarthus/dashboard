@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Zarthus\Dashboard\Core;
 
+use Zarthus\Dashboard\Core\Cache\FilesystemCache;
+
 class Kernel
 {
     /**
@@ -17,11 +19,17 @@ class Kernel
      */
     private $config;
 
+    /**
+     * @var FilesystemCache
+     */
+    private $cache;
+
     public function boot(): void
     {
         $this->config = $this->loadConfig('main');
-
         ExceptionHandler::register($this->isDebug());
+
+        $this->cache = FilesystemCache::fromApplication();
     }
 
     public function loadConfig(string $name): Config
@@ -37,5 +45,13 @@ class Kernel
     public function isDebug(): bool
     {
         return (bool) $this->config->get('debug');
+    }
+
+    /**
+     * @return FilesystemCache
+     */
+    public function getCache(): FilesystemCache
+    {
+        return $this->cache;
     }
 }

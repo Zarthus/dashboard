@@ -10,9 +10,7 @@ declare(strict_types=1);
 
 namespace Zarthus\Dashboard\Core\Exception\Fatal;
 
-use Zarthus\Dashboard\Core\Exception\DashException;
-
-class ApplicationException extends DashException
+final class FileNotFoundException extends ApplicationException
 {
 
 }

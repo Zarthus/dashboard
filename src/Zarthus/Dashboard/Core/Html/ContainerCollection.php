@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-namespace Zarthus\Dashboard\Core\Module;
+namespace Zarthus\Dashboard\Core\Html;
 
 use Zarthus\Dashboard\Core\Ds\Collection;
 use Zarthus\Dashboard\Core\Impl\Container;
@@ -19,14 +19,6 @@ class ContainerCollection extends Collection
      * @var Container[]
      */
     protected $data;
-
-    /**
-     * @param Container[] $containers
-     */
-    public function __construct(array $containers)
-    {
-        parent::__construct($containers);
-    }
 
     /**
      * @param string $key

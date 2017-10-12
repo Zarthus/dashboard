@@ -17,19 +17,21 @@ final class Directory
     public const CONFIG = self::ROOT . '/config';
 
     public const TEMP = self::ROOT . '/var';
+    public const CACHE = self::TEMP . '/cache';
     public const LOG = self::TEMP . '/logs/dash';
 
     public const RESOURCES = __DIR__ . '/Resources';
     public const VIEWS = self::RESOURCES . '/view';
+    public const TEMPLATES = self::VIEWS . '/templates';
 
     public static function join(string ...$path): string
     {
         $joined = '';
 
         foreach ($path as $p) {
-            $joined .= trim($p, '/\\') . DIRECTORY_SEPARATOR;
+            $joined .= rtrim($p, '/\\') . DIRECTORY_SEPARATOR;
         }
 
-        return $joined;
+        return rtrim($joined, '/\\');
     }
 }
