@@ -34,13 +34,18 @@
     },
     "scripts": {
         "general-scripts": [
-            "Zarthus\\Dashboard\\Core\\Install\\DistributionProvider::copyConfig"
+            "Zarthus\\Dashboard\\Core\\Terminal\\DistributionProvider::copyConfig",
+            "@clean"
         ],
         "post-install-cmd": [
             "@general-scripts"
         ],
         "post-update-cmd": [
             "@general-scripts"
+        ],
+
+        "clean": [
+            "Zarthus\\Dashboard\\Core\\Terminal\\CommandProvider::clearCache"
         ],
 
         "test": "phpunit --configuration=var/phpunit.xml",

@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-namespace Zarthus\Dashboard\Core\Install;
+namespace Zarthus\Dashboard\Core\Terminal;
 
 use Zarthus\Dashboard\Core\Directory;
 

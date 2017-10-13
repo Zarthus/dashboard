@@ -48,6 +48,14 @@ Currently, you can add the following under the "Unofficial" namespaces:
 - Your own layouts and templates
 - Your own documentation
 
+## Composer commands
+
+Dash ships with several useful composer commands:
+
+- `composer clean` to remove all caches
+- `composer test` to run the unit tests
+- `composer cs` (code style) and `composer cbf` (code style fix)
+
 ## Documentation
 
 Documentation for configuring modules is provided in `docs/`
