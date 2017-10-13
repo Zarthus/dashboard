@@ -32,6 +32,11 @@ class Container implements ContainerImpl
      */
     public $render;
 
+    /**
+     * @var array
+     */
+    public $variables;
+
     public function __construct(string $templateName)
     {
         $this->setTemplateName($templateName);
@@ -49,7 +54,7 @@ class Container implements ContainerImpl
 
         return $this->renderTemplate(
             'templates/' . $this->templateName,
-            $output
+            array_merge($this->getVariables(), $output)
         );
     }
 
@@ -69,6 +74,26 @@ class Container implements ContainerImpl
     public function setRenderConfig(array $render): Container
     {
         $this->render = $render;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getVariables(): array
+    {
+        return $this->variables;
+    }
+
+    /**
+     * @param array $variables
+     *
+     * @return self
+     */
+    public function setVariables(array $variables): Container
+    {
+        $this->variables = $variables;
 
         return $this;
     }

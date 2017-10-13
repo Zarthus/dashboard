@@ -30,6 +30,11 @@ class Kernel
         ExceptionHandler::register($this->isDebug());
 
         $this->cache = FilesystemCache::fromApplication();
+
+        if ($this->config->get('no_cache') ?? false) {
+            // TODO: Write an adapter that doesn't cache to begin with.
+            $this->cache->getPool()->clear();
+        }
     }
 
     public function loadConfig(string $name): Config

@@ -34,6 +34,7 @@ class ContainerBuilder
         foreach ($config as $container) {
             $builder->newContainer($kernel, $container['template'])
                 ->render($container['render'])
+                ->variables($container['variables'] ?? [])
                 ->append();
         }
 
@@ -56,6 +57,13 @@ class ContainerBuilder
     public function render(array $render): self
     {
         $this->currentContainer->setRenderConfig($render);
+
+        return $this;
+    }
+
+    public function variables(array $variables): self
+    {
+        $this->currentContainer->setVariables($variables);
 
         return $this;
     }

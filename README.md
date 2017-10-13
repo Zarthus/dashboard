@@ -37,6 +37,7 @@ everything towards `public/index.php`
 - If you depend on a dependency adjusting composer.json is difficult.
 - No database support, you can however create files within var/cache.
 - Difficult to version control unofficial components natively.
+- Requires a developer for setup and extennsion; No UI exists to configure your dashboard.
 
 ### Unofficial namespace
 

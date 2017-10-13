@@ -27,7 +27,7 @@ return [
         // A collection of containers
         'containers' => [
             [
-                'template' => 'horizontal_two_columns', // The template (Core/Resources/view/templates) to use
+                'template' => 'column_two_horizontal', // The template (Core/Resources/view/templates) to use
                 // The cache TTL to use for this container. Even if the inner modules cache for less time
                 // this will take priority.
                 'cache_ttl' => 3600,

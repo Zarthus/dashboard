@@ -3,4 +3,7 @@
 return [
     // Debug mode: Show Exception traces back to the user.
     'debug' => false,
+
+    // Disable caching.
+    'no_cache' => false,
 ];
