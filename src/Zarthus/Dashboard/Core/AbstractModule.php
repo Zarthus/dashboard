@@ -42,10 +42,25 @@ abstract class AbstractModule implements Module
         $this->validate();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     abstract public function validate(): void;
+
+    /**
+     * Normalizes the configuration, setting optional configuration
+     * values to their appropriate default value, casting the right type, etc.
+     *
+     * @return void
+     */
+    public function normalizeConfig(): void
+    {
+    }
 
     public function runExecute(): string
     {
+        $this->normalizeConfig();
+
         $cachePool = $this->kernel->getCache()->getPool();
         $hashCode = $this->hashCode();
 
@@ -60,6 +75,9 @@ abstract class AbstractModule implements Module
         return $exec;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     abstract public function execute(): string;
 
     public function getName(): string

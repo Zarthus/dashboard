@@ -1,1 +1,1 @@
-<div class="container">
+<div class="container <?= $classes ?? '' ?>">

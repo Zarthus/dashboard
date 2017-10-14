@@ -12,14 +12,14 @@ namespace Zarthus\Dashboard\Core\Html;
 
 use Zarthus\Dashboard\Core\Builder\ModuleBuilder;
 use Zarthus\Dashboard\Core\Impl\Module;
-use \Zarthus\Dashboard\Core\Impl\Section as SectionImpl;
+use Zarthus\Dashboard\Core\Impl\Section as SectionImpl;
 use Zarthus\Dashboard\Core\Kernel;
 
 class Section implements SectionImpl
 {
-    public static function fromConfig(Kernel $kernel, string $key, array $config): Section
+    public static function fromConfig(Kernel $kernel, string $key, ?array $config): Section
     {
-        return new self($kernel, $key, $config['module'], $config['config']);
+        return new self($kernel, $key, $config['module'], $config['config'] ?? []);
     }
 
     /**

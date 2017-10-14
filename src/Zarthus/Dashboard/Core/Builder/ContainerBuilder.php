@@ -32,8 +32,8 @@ class ContainerBuilder
         $builder = new self();
 
         foreach ($config as $container) {
-            $builder->newContainer($kernel, $container['template'])
-                ->render($container['render'])
+            $builder->newContainer($kernel, str_replace(['.', '\\'], '/', $container['template']))
+                ->render($container['render'] ?? [])
                 ->variables($container['variables'] ?? [])
                 ->append();
         }
@@ -80,7 +80,6 @@ class ContainerBuilder
         }
 
         $this->collection->add($this->currentContainer);
-
         $this->currentContainer = null;
 
         return $this;

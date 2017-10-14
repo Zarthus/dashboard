@@ -142,6 +142,6 @@ class Container implements ContainerImpl
 
     public function hashCode(): string
     {
-        return hash('sha256', serialize($this->render));
+        return hash('sha256', $this->templateName . serialize($this->variables) . serialize($this->render));
     }
 }

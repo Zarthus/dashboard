@@ -24,6 +24,21 @@ class Kernel
      */
     private $cache;
 
+    /**
+     * @var string
+     */
+    public $name;
+    /**
+     * @var string
+     */
+    public $version;
+
+    public function __construct(string $name = 'zarthus-dashboard', string $version = 'dev-master')
+    {
+        $this->name = $name;
+        $this->version = $version;
+    }
+
     public function boot(): void
     {
         $this->config = $this->loadConfig('main');
@@ -58,5 +73,21 @@ class Kernel
     public function getCache(): FilesystemCache
     {
         return $this->cache;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return $this->version;
     }
 }

@@ -144,7 +144,7 @@ class SystemInfo extends AbstractModule
         } else {
             $os = PHP_OS;
 
-            if (strpos('WIN', $os)) {
+            if (strpos($os, 'WIN')) {
                 $os = 'Windows';
             }
         }

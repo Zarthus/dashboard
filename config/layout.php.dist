@@ -9,30 +9,172 @@ return [
             'has-hero' => true,
             'title' => 'Simple Dashboard',
             'subtitle' => 'Hello, World!',
-            'theme' => 'bulma-slate',
+            'icons' => true,
         ],
 
         'containers' => [
             [
-                'template' => 'horizontal_two_columns',
+                'template' => 'open_container',
+            ],
+            [
+                'template' => 'open_columns',
+            ],
+            [
+                'template' => 'open_column',
+            ],
+            [
+                'template' => 'presets.panel_list',
                 'cache_ttl' => 3600,
 
+                'variables' => [
+                    'heading' => 'Bookmarks',
+                    'icons' => true,
+                    'items' => [
+                        [
+                            'href' => 'https://google.com',
+                            'name' => 'Google',
+                            'icon' => 'google',
+                        ],
+                        [
+                            'href' => 'https://gmail.com',
+                            'name' => 'Google Mail',
+                            'icon' => 'envelope',
+                        ],
+                        [
+                            'href' => 'https://github.com',
+                            'name' => 'GitHub',
+                            'icon' => 'github',
+                        ],
+                        [
+                            'href' => 'https://gist.github.com',
+                            'name' => 'GitHub Gist',
+                            'icon' => 'code',
+                        ],
+                        [
+                            'href' => 'https://amazon.com',
+                            'name' => 'Amazon',
+                            'icon' => 'amazon',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'template' => 'close_div',
+            ],
+            [
+                'template' => 'open_column',
+            ],
+            [
+                'template' => 'presets.panel_list',
+                'cache_ttl' => 3600,
+
+                'variables' => [
+                    'heading' => 'Personal Bookmarks',
+                    'icons' => true,
+                    'items' => [
+                        [
+                            'href' => 'https://reddit.com',
+                            'name' => 'reddit',
+                            'icon' => 'reddit',
+                        ],
+                        [
+                            'href' => 'https://twitter.com',
+                            'name' => 'Twitter',
+                            'icon' => 'twitter',
+                        ],
+                        [
+                            'href' => 'https://steampowered.com',
+                            'name' => 'Steam',
+                            'icon' => 'steam',
+                        ],
+                        [
+                            'href' => 'https://youtube.com',
+                            'name' => 'YouTube',
+                            'icon' => 'youtube',
+                        ],
+                        [
+                            'href' => 'https://twitch.tv',
+                            'name' => 'Twitch',
+                            'icon' => 'twitch',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'template' => 'close_div',
+            ],
+            [
+                'template' => 'open_column',
+            ],
+            [
+                'template' => 'panel',
+                'cache_ttl' => 60,
+
+                'variables' => [
+                    'heading' => 'RSS Feeds',
+                ],
+
                 'render' => [
-                    'sectionLeft' => [
-                        'module' => 'Constant.StaticHtml',
+                    'items' => [
+                        'module' => 'Data.RssFeed',
 
                         'config' => [
-                            'text' => 'Lorem ipsum',
+                            'feeds' => [
+                                'https://en.wikipedia.org/w/api.php?hidebots=1&hidecategorization=1&hideWikibase=1&urlversion=1&days=7&limit=10&action=feedrecentchanges&feedformat=rss',
+                            ],
+                            'limit' => 5,
                         ],
                     ],
+                ],
+            ],
+            [
+                'template' => 'close_div',
+                'variables' => [
+                    'repeats' => 3
+                ],
+            ],
+            [
+                'template' => 'open_container',
+            ],
+            [
+                'template' => 'open_columns',
+            ],
+            [
+                'template' => 'open_column',
+                'variables' => [
+                    'classes' => 'is-offset-one-quarter is-half',
+                ]
+            ],
+            [
+                'template' => 'panel',
+                'cache_ttl' => 300,
 
-                    'sectionRight' => [
-                        'module' => 'Constant.StaticHtml',
+                'variables' => [
+                    'heading' => 'Twitter',
+                ],
+
+                'render' => [
+                    'items' => [
+                        'module' => 'Data.Twitter',
 
                         'config' => [
-                            'text' => 'dolor sit amet',
+                            'my_timeline' => true,
+                            'limit' => 5,
+
+                            // FIX ME
+                            'consumer_key' => '',
+                            'consumer_secret' => '',
+                            'access_token' => '',
+                            'access_token_secret' => '',
+
                         ],
                     ],
+                ],
+            ],
+            [
+                'template' => 'close_div',
+                'variables' => [
+                    'repeats' => 3
                 ],
             ],
         ],
