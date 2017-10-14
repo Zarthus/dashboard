@@ -172,7 +172,8 @@ class Twitter extends AbstractModule
         $connection->setTimeouts($this->config['timeouts_connect'], $this->config['timeouts_request']);
         $connection->setUserAgent(
             $this->config['user-agent'] ??
-                $this->kernel->getName() . '/' . $this->kernel->getVersion() . ' php/' . PHP_VERSION . ' module-hashcode/' . StringUtil::truncate($this->hashCode(), 7, '')
+                $this->kernel->getName() . '/' . $this->kernel->getVersion() .
+                    ' php/' . PHP_VERSION . ' module-hashcode/' . StringUtil::truncate($this->hashCode(), 7, '')
         );
         $connection->get('account/verify_credentials');
 
